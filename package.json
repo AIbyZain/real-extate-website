@@ -1,0 +1,14 @@
+{
+  "name": "walnut-house",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Single-property website with a scroll-driven walkthrough. Plain HTML, CSS and JS.",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js",
+    "assets": "node scripts/prepare-assets.mjs"
+  },
+  "engines": {
+    "node": ">=16"
+  }
+}
