@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en" class="is-loading">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Gatehouse Properties | Homes to buy, sell and rent in Hillcrest</title>
+  <meta name="description" content="Gatehouse Properties buys, sells and rents homes, plots and new projects across Hillcrest, Oakridge, the Old Town and Riverside. Walk through our featured home, Walnut House.">
+  <meta name="theme-color" content="#26282A">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Gatehouse Properties">
+  <meta property="og:title" content="Gatehouse Properties, Hillcrest">
+  <meta property="og:description" content="Homes to buy, sell and rent across Hillcrest. Walk through our featured home, room by room.">
+  <meta property="og:image" content="frames/f_0001.webp">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="img/logo.svg" type="image/svg+xml">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+  <noscript><style>.loader{display:none}html.is-loading{overflow:auto}.wa-cta{opacity:1;visibility:visible;transform:none}</style></noscript>
+</head>
+<body>
+
+  <!-- 1. LOADER -->
+  <div class="loader" id="loader">
+    <div class="loader__ui" id="loaderUi">
+      <p class="loader__line">Loading your house</p>
+      <p class="loader__count" aria-hidden="true"><span id="loaderCount">0</span><span class="loader__pct">%</span></p>
+      <div class="loader__bar" id="loaderBar" role="progressbar" aria-label="Loading the walkthrough" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <span id="loaderFill"></span>
+      </div>
+    </div>
+    <button class="loader__skip" id="loaderSkip" type="button">Skip</button>
+  </div>
+
+  <!-- Top bar -->
+  <header class="topbar" id="topbar">
+    <div class="topbar__in">
+      <a class="brandmark" href="#top">
+        <img src="img/logo.svg" alt="" width="28" height="28">
+        <span data-cfg="COMPANY.name">Gatehouse Properties</span>
+      </a>
+      <button class="topbar__menu" id="menuBtn" type="button" aria-expanded="false" aria-controls="topnav">Menu</button>
+      <nav class="topnav" id="topnav" aria-label="Main">
+        <ul>
+          <li><a href="#featured">Featured home</a></li>
+          <li><a href="#properties">Properties</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#visit">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- 2. WALKTHROUGH (first section, frame 1 is the closed gate) -->
+    <section class="walk" id="walk" aria-label="Walkthrough of Walnut House, from the gate to the terrace">
+      <canvas class="walk__canvas" id="walkCanvas" role="img" aria-label="Moving view through Walnut House: the estate gate opens, then the living room, kitchen, hallway, main bedroom, bathroom and terrace"></canvas>
+      <div class="walk__shade" aria-hidden="true"></div>
+
+      <div class="intro" id="intro">
+        <div class="intro__scrim" aria-hidden="true"></div>
+        <div class="hero__copy">
+          <p class="hero__kicker" data-cfg="COMPANY.name">Gatehouse Properties</p>
+          <h1 class="hero__title" data-cfg="hero.headline">Open the gate. We&rsquo;ll show you around.</h1>
+          <p class="hero__sub" data-cfg="hero.sub">Buying, selling and renting homes across Hillcrest, Oakridge and the Old Town since 2011.</p>
+          <a class="cue" href="#walk" id="scrollCue"><span class="cue__line" aria-hidden="true"></span>Scroll to enter</a>
+        </div>
+      </div>
+
+      <div class="rooms" id="rooms"></div>
+      <nav class="dots" id="dots" aria-label="Jump to a room"></nav>
+    </section>
+
+    <!-- 3. FEATURED HOME HIGHLIGHTS -->
+    <section class="facts" id="featured" aria-labelledby="factsTitle">
+      <div class="wrap facts__grid">
+        <h2 class="facts__title" id="factsTitle"><span data-cfg="LISTING.kicker">Featured home</span>: <span data-cfg="LISTING.name">Walnut House</span>, <span data-cfg="LISTING.area">Hillcrest</span></h2>
+
+        <div class="facts__area">
+          <p class="facts__big" data-cfg="LISTING.size">340 m²</p>
+          <p class="facts__note" data-cfg="LISTING.sizeNote"></p>
+        </div>
+
+        <dl class="facts__list">
+          <div class="facts__row">
+            <dt>Asking price</dt>
+            <dd><span class="facts__value" data-cfg="LISTING.price"></span><span class="facts__note" data-cfg="LISTING.priceNote"></span></dd>
+          </div>
+          <div class="facts__row">
+            <dt>Bedrooms</dt>
+            <dd><span class="facts__value" data-cfg="LISTING.bedrooms"></span><span class="facts__note" data-cfg="LISTING.bedroomsNote"></span></dd>
+          </div>
+          <div class="facts__row">
+            <dt>Location</dt>
+            <dd><span class="facts__value" data-cfg="LISTING.location"></span><span class="facts__note" data-cfg="LISTING.locationNote"></span></dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- 4. FLOOR PLAN -->
+    <section class="plan" id="plan" aria-labelledby="planTitle">
+      <div class="wrap plan__grid">
+        <div class="plan__text">
+          <h2 id="planTitle">Floor plan</h2>
+          <p data-cfg="LISTING.planNote"></p>
+        </div>
+        <figure class="plan__fig fade">
+          <img src="img/floorplan.jpg" alt="Floor plan of Walnut House, a single-storey villa with living room, kitchen, hallway, four bedrooms, bathroom and terrace" loading="lazy" decoding="async" width="1600" height="1100">
+        </figure>
+      </div>
+    </section>
+
+    <!-- 5. PROPERTIES WE HANDLE -->
+    <section class="props" id="properties" aria-labelledby="propsTitle">
+      <div class="wrap">
+        <div class="props__head">
+          <h2 id="propsTitle">Properties we handle</h2>
+          <p data-cfg="propertiesIntro"></p>
+        </div>
+        <table class="ptable">
+          <thead>
+            <tr><th scope="col">Property type</th><th scope="col">Areas</th><th scope="col">Typical range</th><th scope="col">We can help you</th></tr>
+          </thead>
+          <tbody id="propRows"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 6. SERVICES -->
+    <section class="svc" id="services" aria-labelledby="svcTitle">
+      <div class="wrap svc__grid">
+        <div class="svc__head">
+          <h2 id="svcTitle">Services</h2>
+          <p data-cfg="servicesIntro"></p>
+        </div>
+        <div class="svc__list" id="svcList"></div>
+      </div>
+    </section>
+
+    <!-- 7. WHY CHOOSE US -->
+    <section class="why" id="why" aria-labelledby="whyTitle">
+      <div class="wrap">
+        <h2 class="why__title" id="whyTitle">Why people choose us</h2>
+        <ul class="why__list" id="whyList"></ul>
+      </div>
+    </section>
+
+    <!-- 8. ABOUT -->
+    <section class="about" id="about" aria-labelledby="aboutTitle">
+      <div class="wrap about__grid">
+        <div class="about__side">
+          <h2 id="aboutTitle">About <span data-cfg="COMPANY.short">Gatehouse</span></h2>
+          <p class="about__meta"><span data-cfg="COMPANY.address"></span><br><span data-cfg="COMPANY.hours"></span></p>
+        </div>
+        <div class="about__text" id="aboutText"></div>
+      </div>
+    </section>
+
+    <!-- 9. CONTACT -->
+    <section class="visit" id="visit" aria-labelledby="visitTitle">
+      <div class="wrap visit__grid">
+        <div class="visit__intro">
+          <h2 id="visitTitle">Talk to us</h2>
+          <p data-cfg="visitIntro"></p>
+          <p class="visit__direct">
+            Call <a id="phoneLink" href="#"></a><br>
+            Email <a id="emailLink" href="#"></a><br>
+            Visit <span data-cfg="COMPANY.address"></span><br>
+            <a id="mapLink" href="#" target="_blank" rel="noopener">Open the office in Google Maps</a>
+          </p>
+        </div>
+
+        <form class="form" id="visitForm" novalidate>
+          <div class="field">
+            <label for="fName">Your name</label>
+            <input id="fName" name="name" type="text" autocomplete="name" required aria-describedby="eName">
+            <p class="field__error" id="eName" aria-live="polite"></p>
+          </div>
+          <div class="field">
+            <label for="fPhone">Phone number</label>
+            <input id="fPhone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required aria-describedby="ePhone">
+            <p class="field__error" id="ePhone" aria-live="polite"></p>
+          </div>
+          <div class="field">
+            <label for="fTime">Preferred visit time</label>
+            <select id="fTime" name="time" required aria-describedby="eTime"></select>
+            <p class="field__error" id="eTime" aria-live="polite"></p>
+          </div>
+          <button class="btn btn--brass" type="submit">Send on WhatsApp</button>
+          <p class="form__status" id="formStatus" role="status"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot__grid">
+      <div class="foot__brand">
+        <a class="brandmark brandmark--foot" href="#top">
+          <img src="img/logo.svg" alt="" width="28" height="28" loading="lazy">
+          <span data-cfg="COMPANY.name">Gatehouse Properties</span>
+        </a>
+        <p data-cfg="COMPANY.tagline"></p>
+      </div>
+      <nav class="foot__links" aria-label="Footer">
+        <a href="#featured">Featured home</a>
+        <a href="#properties">Properties</a>
+        <a href="#services">Services</a>
+        <a href="#about">About</a>
+        <a href="#visit">Contact</a>
+      </nav>
+      <p class="foot__contact"><span data-cfg="COMPANY.address"></span><br><span data-cfg="COMPANY.phone"></span><br><span data-cfg="COMPANY.email"></span></p>
+    </div>
+    <div class="wrap foot__legal">
+      <p>&copy; <span id="year">2026</span> <span data-cfg="COMPANY.name">Gatehouse Properties</span>. <span data-cfg="COMPANY.licence"></span></p>
+    </div>
+  </footer>
+
+  <!-- Sticky CTA -->
+  <a class="wa-cta" id="waCta" href="#" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path fill="currentColor" d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.47-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35m-5.42 7.4a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.89-9.88 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.44 9.88-9.89 9.88m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45c6.56 0 11.89-5.34 11.9-11.9a11.82 11.82 0 0 0-3.48-8.4Z"/></svg>
+    <span>Book a Visit on WhatsApp</span>
+  </a>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

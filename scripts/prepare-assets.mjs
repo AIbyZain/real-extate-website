@@ -13,7 +13,7 @@ const WALKTHROUGH_FILES = ["loader.mp4", "video-02.mp4", "video-03.mp4", "video-
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const MEDIA = path.join(ROOT, "media");
-const FRAMES = path.join(ROOT, "frames");
+const FRAMES = path.join(ROOT, "public", "frames");
 const JOINED = path.join(MEDIA, "walkthrough.joined.mp4");
 
 const FPS = 6;
