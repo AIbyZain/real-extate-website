@@ -119,13 +119,8 @@ button, input, select { font: inherit; color: inherit; }
   position: fixed; top: 0; left: 0; right: 0; z-index: 120;
   padding-top: env(safe-area-inset-top);
   color: var(--on-dark);
-  background: rgba(30, 31, 33, .55);
-  -webkit-backdrop-filter: blur(12px) saturate(1.1);
-  backdrop-filter: blur(12px) saturate(1.1);
+  background: rgba(30, 31, 33, .82); /* solid tint: a live blur over the moving canvas costs a repaint every frame */
   border-bottom: 1px solid rgba(244, 240, 232, .1);
-}
-@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .topbar { background: rgba(30, 31, 33, .92); }
 }
 .topbar__in {
   height: 60px; padding: 0 var(--gutter);
@@ -203,16 +198,11 @@ button, input, select { font: inherit; color: inherit; }
   position: absolute; left: 0; bottom: 0; width: 100%;
   padding: 22px 26px 24px;
   color: var(--on-dark);
-  background: rgba(30, 31, 33, .48);
-  -webkit-backdrop-filter: blur(14px) saturate(1.1);
-  backdrop-filter: blur(14px) saturate(1.1);
+  background: rgba(30, 31, 33, .78);
   border: 1px solid rgba(244, 240, 232, .14);
   border-radius: 4px;
   opacity: 0; visibility: hidden;
   will-change: opacity, transform;
-}
-@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .room { background: rgba(30, 31, 33, .82); }
 }
 .room__label { font-size: 14px; color: var(--brass-light); letter-spacing: .02em; }
 .room__title { margin-top: .35rem; font: 400 clamp(1.7rem, 2.6vw, 2.25rem)/1.1 var(--serif); }

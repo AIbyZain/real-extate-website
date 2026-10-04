@@ -88,11 +88,11 @@ const CONFIG = {
   META_PATH: "/frames/meta.json",
   FRAME_PATH: "/frames/f_{n}.webp",
   FRAME_PAD: 4,
-  FALLBACK_META: { total: 336, clipEnds: [48, 96, 144, 192, 240, 288, 336] }, // used only if meta.json is missing
+  FALLBACK_META: { total: 504, clipEnds: [72, 144, 216, 288, 360, 432, 504] }, // used only if meta.json is missing
   MOBILE_BREAKPOINT: 768,
   MOBILE_FRAME_STEP: 2,        // every 2nd frame under the breakpoint
-  PRELOAD_FRAMES: 48,          // counted in the loader percentage
-  LOAD_CONCURRENCY: 6,
+  PRELOAD_FRAMES: 72,          // counted in the loader percentage (about the gate clip)
+  LOAD_CONCURRENCY: 8,
   SCROLL_VH: 800,              // scroll distance of the walkthrough
   HOLD_VH: 40,                 // extra pinned scroll on the last frame before release
   INTRO_FADE_END: 0.05,        // hero text fades out between progress 0 and this
@@ -296,8 +296,9 @@ const CONFIG = {
 
   const canvas = $("#walkCanvas");
   const ctx = canvas.getContext("2d", { alpha: false });
-  let targetIndex = 0;
-  let drawnIndex = -1;
+  let targetIndex = 0;   // nearest whole frame, used for load priority
+  let targetPos = 0;     // exact position between frames, used for drawing
+  let drawnKey = "";
   let drawQueued = false;
   let preloadDone = false;
   let inFlight = 0;
@@ -328,7 +329,7 @@ const CONFIG = {
           pending.delete(img);
           if (destroyed) return resolve(false);
           images[i] = img; loaded[i] = 1;
-          if (drawnIndex !== targetIndex) requestDraw();
+          requestDraw();
           resolve(true);
         };
         img.decode ? img.decode().then(done, done) : done();
@@ -348,17 +349,39 @@ const CONFIG = {
     return -1;
   }
 
-  function draw() {
-    drawQueued = false;
-    if (!count) return;
-    const i = nearestLoaded(targetIndex);
-    if (i < 0 || i === drawnIndex) return;
-    const img = images[i];
+  function paint(img, alpha) {
     const cw = canvas.width, ch = canvas.height;
     const s = Math.max(cw / img.naturalWidth, ch / img.naturalHeight);
     const dw = img.naturalWidth * s, dh = img.naturalHeight * s;
+    ctx.globalAlpha = alpha;
     ctx.drawImage(img, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
-    drawnIndex = i;
+    ctx.globalAlpha = 1;
+  }
+
+  // Draws the exact scroll position: the frame before it, with the next frame
+  // blended on top by the fraction in between. This hides the step between frames.
+  function draw() {
+    drawQueued = false;
+    if (!count) return;
+    const i0 = Math.max(0, Math.min(count - 1, Math.floor(targetPos)));
+    const i1 = Math.min(count - 1, i0 + 1);
+    const t = Math.round((targetPos - i0) * 20) / 20; // 5% steps, enough to look smooth
+
+    if (loaded[i0] && loaded[i1] && t > 0 && i1 !== i0) {
+      const key = `${i0}:${t}`;
+      if (key === drawnKey) return;
+      paint(images[i0], 1);
+      paint(images[i1], t);
+      drawnKey = key;
+      return;
+    }
+
+    const i = nearestLoaded(t >= 0.5 ? i1 : i0);
+    if (i < 0) return;
+    const key = `${i}:0`;
+    if (key === drawnKey) return;
+    paint(images[i], 1);
+    drawnKey = key;
   }
   function requestDraw() {
     if (drawQueued || destroyed) return;
@@ -367,14 +390,15 @@ const CONFIG = {
   }
 
   function sizeCanvas() {
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    // Frames are 1280 px wide, so a 2x canvas costs four times the pixels for no extra detail.
+    const dpr = 1;
     const w = Math.round(canvas.clientWidth * dpr);
     const h = Math.round(canvas.clientHeight * dpr);
     if (canvas.width !== w || canvas.height !== h) {
       canvas.width = w; canvas.height = h;
       ctx.imageSmoothingEnabled = true;
       ctx.imageSmoothingQuality = "high";
-      drawnIndex = -1;
+      drawnKey = "";
       requestDraw();
     }
   }
@@ -492,10 +516,11 @@ const CONFIG = {
   let walkTl = null;
 
   function onProgress() {
-    const idx = Math.round(state.p * (count - 1));
+    targetPos = state.p * (count - 1);
+    requestDraw();
+    const idx = Math.round(targetPos);
     if (idx !== targetIndex) {
       targetIndex = idx;
-      requestDraw();
       if (preloadDone && inFlight < CONFIG.LOAD_CONCURRENCY) pump();
     }
     updateIntro(state.p);
@@ -604,7 +629,8 @@ const CONFIG = {
 
     // The canvas underneath already shows frame 1, the closed gate.
     targetIndex = 0;
-    drawnIndex = -1;
+    targetPos = 0;
+    drawnKey = "";
     sizeCanvas();
     requestDraw();
 

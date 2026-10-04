@@ -16,7 +16,7 @@ const MEDIA = path.join(ROOT, "media");
 const FRAMES = path.join(ROOT, "public", "frames");
 const JOINED = path.join(MEDIA, "walkthrough.joined.mp4");
 
-const FPS = 6;
+const FPS = 12;
 const WIDTH = 1280;
 const WEBP_QUALITY = 70;
 
